@@ -42,8 +42,9 @@ def lambda_handler(event, context):
     try:
         region = event['Region']
         tagkey = event.get('TagKey', None)
-        tagvalue = event['TagValue']
+        tagvalue = event.get('TagValue', None)
         action = event['Action']
+
         client = boto3.client('rds', region_name = region)
 
         db_clusters = client.describe_db_clusters()
@@ -56,7 +57,7 @@ def lambda_handler(event, context):
                 else:
                     cluster_action(client, action, cluster['DBClusterIdentifier'])
             else:
-                print('No Action: Clusters status {}.'.format(cluster['Status']))
+                print('No Action: Clusters {} status {}.'.format(cluster['DBClusterIdentifier'], cluster['Status']))
 
         db_instances = client.describe_db_instances()
         v_readreplica = []
@@ -75,7 +76,7 @@ def lambda_handler(event, context):
                         else:
                             instance_action(client, action, instance['DBInstanceIdentifier'])
                     else:
-                        print('No Action: instance status {}.'.format(cluster['Status']))
+                        print('No Action: instance {} status {}.'.format(instance['DBInstanceIdentifier'], cluster['Status']))
 
         return {
             "statusCode": 200,

@@ -6,18 +6,29 @@ AWS RDS 自動起動・停止スクリプト
 
 ## Json
 
-```json
-{
-  "Region": "xxxxxx",
-  "TagKey": "xxxxxx",
-  "TagValue": "xxxxxx",
-  "Action": "start",   # start or stop
-}
-```
+- All Database
 
+  ```json
+  {
+    "Region": "xxxxxx",
+    "Action": "start"   // start or stop
+  }
+  ```
 
+- Tag filter
 
-## Policy
+  ```json
+  {
+    "Region": "xxxxxx",
+    "TagKey": "xxxxxx",
+    "TagValue": "xxxxxx",
+    "Action": "start"   // start or stop
+  }
+  ```
+
+  
+
+## IAM Role Policy
 
 ```json
 {
